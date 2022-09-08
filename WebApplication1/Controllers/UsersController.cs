@@ -6,17 +6,17 @@ namespace WebApplication1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         static List<User> users = new List<User>();
-        [HttpGet("GetUsers")]
+        [HttpGet]
 
         public IEnumerable<User> GetAllUsers()
         {
             //users.Add(new User("tk", "khang", 21, "32dsss"));
             return users;
         }
-        [HttpGet("GetUserName")]
+        [HttpGet("{UserName}")]
         public User GetUserName(string UserName)
         {
             foreach (var user in users)
@@ -28,8 +28,8 @@ namespace WebApplication1.Controllers
             }
             return null;
         }
-        [HttpPost("InputUser")]
-        public IActionResult InputUser(User newUser)
+        [HttpPost("{NewUser}")]
+        public IActionResult PostUser(User newUser)
         {
             if(newUser.UserName != null)
             {
@@ -46,7 +46,7 @@ namespace WebApplication1.Controllers
             return BadRequest("Input is empty");
         }
 
-        [HttpPut("UpdateUser")]
+        [HttpPut("{UserName}")]
         public IActionResult UpdateUser(string userName, User updateuser)
         {
             foreach (var user in users)
@@ -60,7 +60,7 @@ namespace WebApplication1.Controllers
             }
             return BadRequest("Cannot find user");
         }
-        [HttpDelete("DeleteUser")]
+        [HttpDelete("{UserName}")]
         public IActionResult DeleteUser(string userName)
         {
             foreach(var user in users)
