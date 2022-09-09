@@ -54,11 +54,16 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPut("{UserName}")]
-        public IActionResult UpdateUser(string userName, User updateuser)
+        public IActionResult UpdateUser(string UserName, User updateuser)
         {
+            if (UserName != updateuser.UserName)
+            {
+                return BadRequest("Not match with the input!");
+            }
+            
             foreach (var user in users)
             {
-                if (userName == user.UserName)
+                if (UserName == user.UserName)
                 {
                     user.Age = updateuser.Age;
                     user.Address = updateuser.Address;
@@ -68,11 +73,11 @@ namespace WebApplication1.Controllers
             return BadRequest("Cannot find user");
         }
         [HttpDelete("{UserName}")]
-        public IActionResult DeleteUser(string userName)
+        public IActionResult DeleteUser(string UserName)
         {
             foreach(var user in users)
             {
-                if(userName == user.UserName)
+                if(UserName == user.UserName)
                 {
                     users.Remove(user);
                     return Ok("Complete Delete!");
