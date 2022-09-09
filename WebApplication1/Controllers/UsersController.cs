@@ -28,19 +28,26 @@ namespace WebApplication1.Controllers
             }
             return null;
         }
-        [HttpPost("{NewUser}")]
+        [HttpPost]
         public IActionResult PostUser(User newUser)
         {
             if(newUser.UserName != null)
             {
+                User createUser = new User
+                {
+                    UserName = newUser.UserName,
+                    Name = newUser.Name,
+                    Age = newUser.Age,
+                    Address = newUser.Address,
+                };
                 foreach (var user in users)
                 {
-                    if (newUser.UserName == user.UserName)
+                    if (createUser.UserName == user.UserName)
                     {
                         return BadRequest("Already have this user");
                     }
                 }
-                users.Add(newUser);
+                users.Add(createUser);
                 return Ok("Add success");
             }
             return BadRequest("Input is empty");
